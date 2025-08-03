@@ -5,7 +5,10 @@ const Footer = () => {
                 <div className="footer-section brand">
                     <div className="logo-placeholder">🍋</div>
                     <h4>Little Lemon</h4>
-                    <p>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
+                    <p>
+                        We are a family owned Mediterranean restaurant,
+                        focused on traditional recipes served with a modern twist.
+                    </p>
                 </div>
 
                 <div className="footer-section">
