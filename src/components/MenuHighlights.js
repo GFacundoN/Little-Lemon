@@ -1,4 +1,4 @@
-const Specials = () => {
+const MenuHighlights = () => {
     return (
         <section className="highlights">
             <h2>This week's specials!</h2>
@@ -28,4 +28,4 @@ const Specials = () => {
     )
 }
 
-export default Specials
+export default MenuHighlights

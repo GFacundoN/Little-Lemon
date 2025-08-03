@@ -1,72 +1,76 @@
 import { useState } from 'react'
 
-const BookingForm = ({ availableTimes, dispatchUpdateTimes }) => {
-    const [date, setDate] = useState('')
-    const [time, setTime] = useState('')
-    const [guests, setGuests] = useState(1)
-    const [occasion, setOccasion] = useState('Birthday')
+const BookingForm = ({
+  availableTimes = [],
+  dispatchUpdateTimes = () => {},
+  submitForm = () => {}
+}) => {
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
+  const [guests, setGuests] = useState(1)
+  const [occasion, setOccasion] = useState('Birthday')
 
-    const handleDateChange = e => {
-        const newDate = e.target.value
-        setDate(newDate)
-        dispatchUpdateTimes({ date: newDate })
-    }
+  const handleDateChange = e => {
+    const newDate = e.target.value
+    setDate(newDate)
+    dispatchUpdateTimes({ date: newDate })
+  }
 
-    const handleSubmit = e => {
-        e.preventDefault()
-        alert(
-            `Reservación para ${date} a las ${time}, ${guests} persona(s), ocasión: ${occasion}`
-        )
-    }
+  const handleSubmit = e => {
+    e.preventDefault()
+    const formData = { date, time, guests, occasion }
+    console.log('enviando formData:', formData)
+    submitForm(formData)
+  }
 
-    return (
-        <form className="booking-form" onSubmit={handleSubmit}>
-            <label htmlFor="res-date">Choose date</label>
-            <input
-                type="date"
-                id="res-date"
-                value={date}
-                onChange={handleDateChange}
-                required
-            />
+  return (
+    <form className="booking-form" onSubmit={handleSubmit}>
+      <label htmlFor="res-date">Choose date</label>
+      <input
+        type="date"
+        id="res-date"
+        value={date}
+        onChange={handleDateChange}
+        required
+      />
 
-            <label htmlFor="res-time">Choose time</label>
-            <select
-                id="res-time"
-                value={time}
-                onChange={e => setTime(e.target.value)}
-                required
-            >
-                <option value="" disabled>-- select a time --</option>
-                {availableTimes.map(t => (
-                    <option key={t} value={t}>{t}</option>
-                ))}
-            </select>
+      <label htmlFor="res-time">Choose time</label>
+      <select
+        id="res-time"
+        value={time}
+        onChange={e => setTime(e.target.value)}
+        required
+      >
+        <option value="" disabled>-- select a time --</option>
+        {availableTimes.map((t) => (
+          <option key={t} value={t}>{t}</option>
+        ))}
+      </select>
 
-            <label htmlFor="guests">Number of guests</label>
-            <input
-                type="number"
-                id="guests"
-                value={guests}
-                onChange={e => setGuests(e.target.value)}
-                min="1"
-                max="10"
-                required
-            />
+      <label htmlFor="guests">Number of guests</label>
+      <input
+        type="number"
+        id="guests"
+        value={guests}
+        onChange={e => setGuests(parseInt(e.target.value, 10))}
+        min="1"
+        max="10"
+        required
+      />
 
-            <label htmlFor="occasion">Occasion</label>
-            <select
-                id="occasion"
-                value={occasion}
-                onChange={e => setOccasion(e.target.value)}
-            >
-                <option>Birthday</option>
-                <option>Anniversary</option>
-            </select>
+      <label htmlFor="occasion">Occasion</label>
+      <select
+        id="occasion"
+        value={occasion}
+        onChange={e => setOccasion(e.target.value)}
+      >
+        <option>Birthday</option>
+        <option>Anniversary</option>
+      </select>
 
-            <button type="submit">Submit reservation</button>
-        </form>
-    )
+      <button type="submit">Submit reservation</button>
+    </form>
+  )
 }
 
 export default BookingForm

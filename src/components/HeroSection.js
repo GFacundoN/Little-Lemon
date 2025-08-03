@@ -1,4 +1,4 @@
-const CallToAction = () => {
+const HeroSection = () => {
     return (
         <section className="hero">
             <img src="/images/restaurant-interior.webp" alt="Restaurant interior" />
@@ -11,4 +11,4 @@ const CallToAction = () => {
     )
 }
 
-export default CallToAction
+export default HeroSection
