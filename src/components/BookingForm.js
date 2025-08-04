@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const BookingForm = ({
   availableTimes = [],
@@ -9,12 +9,10 @@ const BookingForm = ({
   const [time, setTime] = useState('')
   const [guests, setGuests] = useState(1)
   const [occasion, setOccasion] = useState('Birthday')
-  const [isFormValid, setIsFormValid] = useState(false)
 
-  useEffect(() => {
-    const isValid = !!date && !!time && guests >= 1 && guests <= 10 && !!occasion
-    setIsFormValid(isValid)
-  }, [date, time, guests, occasion])
+  const isFormValid = () => {
+    return date !== '' && time !== '' && guests > 0 && guests <= 10
+  }
 
   const handleDateChange = e => {
     const newDate = e.target.value
@@ -25,11 +23,12 @@ const BookingForm = ({
   const handleSubmit = e => {
     e.preventDefault()
     const formData = { date, time, guests, occasion }
+    console.log('enviando formData:', formData)
     submitForm(formData)
   }
 
   return (
-    <form className="booking-form" onSubmit={handleSubmit}>
+    <form className="booking-form" onSubmit={handleSubmit} aria-label="Reservation Form">
       <label htmlFor="res-date">Choose date</label>
       <input
         type="date"
@@ -37,7 +36,8 @@ const BookingForm = ({
         value={date}
         onChange={handleDateChange}
         required
-        min={new Date().toISOString().split("T")[0]}
+        aria-required="true"
+        aria-label="Choose reservation date"
       />
 
       <label htmlFor="res-time">Choose time</label>
@@ -46,6 +46,7 @@ const BookingForm = ({
         value={time}
         onChange={e => setTime(e.target.value)}
         required
+        aria-label="Select reservation time"
       >
         <option value="" disabled>-- select a time --</option>
         {availableTimes.map((t) => (
@@ -62,8 +63,8 @@ const BookingForm = ({
         min="1"
         max="10"
         required
+        aria-required="true"
         aria-label="Number of guests"
-        title="Please enter between 1 and 10 guests"
       />
 
       <label htmlFor="occasion">Occasion</label>
@@ -72,13 +73,17 @@ const BookingForm = ({
         value={occasion}
         onChange={e => setOccasion(e.target.value)}
         required
+        aria-label="Select occasion"
       >
-        <option value="" disabled>Select occasion</option>
-        <option>Birthday</option>
-        <option>Anniversary</option>
+        <option value="Birthday">Birthday</option>
+        <option value="Anniversary">Anniversary</option>
       </select>
 
-      <button type="submit" disabled={!isFormValid}>
+      <button
+        type="submit"
+        disabled={!isFormValid()}
+        aria-label="Submit reservation form"
+      >
         Submit reservation
       </button>
     </form>

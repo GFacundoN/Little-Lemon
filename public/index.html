@@ -12,10 +12,18 @@
     <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
 
     <title>Little Lemon</title>
+
+    <meta name="theme-color" content="#ffffff" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root" role="main" aria-label="Main application root"></div>
+    <script defer src="%PUBLIC_URL%/littlelemonApi.js"></script>
   </body>
 </html>
